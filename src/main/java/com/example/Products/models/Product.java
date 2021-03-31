@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long productid;
     @Column(name = "productname")
     private String productname;
     @Column(name = "productdescription")
@@ -16,15 +16,16 @@ public class Product {
     private int price;
     @Column(name = "discount")
     private int discount;
-    @Column(name = "userid")
-    private int userid;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="supplierid")
+    private Supplier supplier;
 
-    public Product(String productname, String description, int price, int discount, int userid) {
+    public Product(String productname, String description, int price, int discount) {
         this.productname = productname;
         this.description = description;
         this.price = price;
         this.discount = discount;
-        this.userid = userid;
+
     }
 
     public String getProductname() {
@@ -59,11 +60,5 @@ public class Product {
         this.discount = discount;
     }
 
-    public int getUserid() {
-        return userid;
-    }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
 }
